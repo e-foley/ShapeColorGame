@@ -109,7 +109,19 @@ public class BoardDrawer
                     color = Color.RED;
                     break;
                 case 1:
-                    color = Color.BLUE;
+                    color = new Color(0, 128, 255);
+                    break;
+                case 2:
+                    color = new Color(0, 196, 0);
+                    break;
+                case 3:
+                    color = Color.YELLOW;
+                    break;
+                case 4:
+                    color = new Color(128, 64, 255);
+                    break;
+                case 5:
+                    color = new Color(255, 128, 0);
                     break;
                 default:
                     color = Color.GRAY;
@@ -124,7 +136,21 @@ public class BoardDrawer
                     shape = new CircleIcon(color);
                     break;
                 case 1:
-                    shape = new SquareIcon(color);
+                    // shape = new SquareIcon(color);
+                    shape = new RegularPolygonIcon(color, 4, 0);
+                    break;
+                case 2:
+                    // shape = new DiamondIcon(color);
+                    shape = new RegularPolygonIcon(color, 4, Math.PI/4.0);
+                    break;
+                case 3:
+                    shape = new StarIcon(color, 4, 0.33, Math.PI/4.0);
+                    break;
+                case 4:
+                    shape = new StarIcon(color, 8, 0.425, 0.0);
+                    break;
+                case 5:
+                    shape = new RegularPolygonIcon(color, 3, -Math.PI/2.0);  // Replace with flower later?
                     break;
                 default:
                     shape = new CircleIcon(color);  // Make dummy icon
