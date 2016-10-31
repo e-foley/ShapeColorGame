@@ -40,9 +40,9 @@ public class BoardDrawerTestApplet extends Applet
             // box.setLocation(x, y);
             
             if (event.getButton() == MouseEvent.BUTTON1) {
-                board.addPiece(counter_x++, counter_y, new GamePiece(0, 0));
+                board.addPiece(++counter_x, counter_y, new GamePiece(0, 0));
             } else if (event.getButton() == MouseEvent.BUTTON3) {
-                board.addPiece(counter_x, counter_y++, new GamePiece(0, 0));
+                board.addPiece(counter_x, ++counter_y, new GamePiece(0, 0));
             }
             //board.addPiece(x, y, new GamePiece(0, 0));
             
