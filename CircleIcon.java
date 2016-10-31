@@ -25,7 +25,6 @@ public class CircleIcon implements TileIcon {
     public void draw(Graphics2D g, double x_center, double y_center, double x_scale, double y_scale) {
         Ellipse2D.Double ellipse = new Ellipse2D.Double(x_center - x_scale, y_center - y_scale, x_scale * 2.0f, y_scale * 2.0f);
         g.setColor(color_);
-        // g.draw(ellipse);
         g.fill(ellipse);
     }
 }
