@@ -8,6 +8,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.Random;
 
 /**
    This applet lets the user move a rectangle by clicking
@@ -19,6 +20,8 @@ public class BoardDrawerTestApplet extends Applet
    {  
        camera = new CameraPosition();
        board = new GameBoard();
+       bank = new StandardTileBank();
+       randomizer = new Random();
        board.addPiece(0, 0, new GamePiece(1, 0));
        //board.addPiece(1, 0, new GamePiece(0, 1));
        //board.addPiece(2, 0, new GamePiece(1, 0));
@@ -39,14 +42,16 @@ public class BoardDrawerTestApplet extends Applet
             int y = event.getY();
             // box.setLocation(x, y);
             
-            if (event.getButton() == MouseEvent.BUTTON1) {
-                board.addPiece(++counter_x, counter_y, new GamePiece(0, 0));
-            } else if (event.getButton() == MouseEvent.BUTTON3) {
-                board.addPiece(counter_x, ++counter_y, new GamePiece(0, 0));
+            if (event.getButton() == MouseEvent.BUTTON1 && !bank.isEmpty()) {
+                board.addPiece(++counter_x, counter_y, bank.drawRandom(randomizer));
+                repaint();
+            } else if (event.getButton() == MouseEvent.BUTTON3 && !bank.isEmpty()) {
+                board.addPiece(counter_x, ++counter_y, bank.drawRandom(randomizer));
+                repaint();
             }
             //board.addPiece(x, y, new GamePiece(0, 0));
             
-            repaint();
+
          }
 
          // do-nothing methods
@@ -85,6 +90,8 @@ public class BoardDrawerTestApplet extends Applet
         BoardDrawer.drawBoard(g2, new BoundingBox(0.0, applet_width - 1.0, 0.0, applet_height - 1.0), camera, board);
    }
 
+   private Random randomizer;
+   private TileBank bank;
    private GameBoard board;
    private TileIcon icon;
    private int counter_x;
