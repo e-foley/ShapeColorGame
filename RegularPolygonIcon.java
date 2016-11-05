@@ -30,7 +30,7 @@ public class RegularPolygonIcon implements TileIcon {
         double angle = rotation_;
         for (int i = 0; i < num_points_; ++i) {
             poly.addPoint(round(x_center + x_scale * Math.cos(angle)), round(y_center + y_scale * Math.sin(angle)));
-            angle += 2.0* Math.PI / num_points_;
+            angle += 2.0 * Math.PI / num_points_;
         }
         g.setColor(color_);
         g.fill(poly);
