@@ -85,8 +85,8 @@ public class BoardDrawerTestApplet extends Applet
         //camera.setYCenter(0.0);
         
         Graphics2D g2 = (Graphics2D)g;
-        Rectangle2D.Double test = new Rectangle2D.Double(0, 0, applet_width - 1, applet_height - 1);
-        g2.draw(test); 
+        Rectangle2D.Double outer_border = new Rectangle2D.Double(0, 0, applet_width - 1, applet_height - 1);
+        g2.draw(outer_border); 
         BoardDrawer.drawBoard(g2, new BoundingBox(0.0, applet_width - 1.0, 0.0, applet_height - 1.0), camera, board);
    }
 
