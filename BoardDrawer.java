@@ -79,10 +79,10 @@ public class BoardDrawer
         return (getNormalBoardEdge(board, BOTTOM) + getNormalBoardEdge(board, TOP)) / 2.0;
     }
     
-    // Finds the board x-ordinate of the piece overlapping the given normalized x-ordinate
-    static public int denormalizeX(double normal_x, boolean include_gaps) 
+    // TODO: Implement gap exclusion
+    static public DenormalizationResult denormalize(double normal_x, double normal_y, boolean include_gaps)
     {
-        return 0;  // placeholder
+        return new DenormalizationResult(true, (int)(Math.round(normal_x / (NORMAL_TILE_WIDTH + NORMAL_TILE_GAP_X))), (int)(Math.round(normal_y / (NORMAL_TILE_HEIGHT + NORMAL_TILE_GAP_Y))));
     }
     
     /**
@@ -150,7 +150,7 @@ public class BoardDrawer
                     shape = new StarIcon(color, 8, 0.425, 0.0);
                     break;
                 case 5:
-                    shape = new RegularPolygonIcon(color, 3, -Math.PI/2.0);  // Replace with flower later?
+                    shape = new FlowerIcon(color, 4, 0.35, 0.65);
                     break;
                 default:
                     shape = new CircleIcon(color);  // Make dummy icon
@@ -158,28 +158,6 @@ public class BoardDrawer
             }
             
             TileGraphic tile = new TileGraphic(shape, 0.6);  // TODO: remove magic number
-            
-//             double space_ratio_x = 0.0;  // how much space is placed between tiles relative to the width of a tile
-//             double space_ratio_y = 0.0;  // how much space is placed between tiles relative to the height of a tile
-            
-//             // find normalized dimensions: how much space is needed in units of tiles
-//             // TODO: Handle case where there are no tiles elegantly
-//             // TODO: Handle case where tiles are not square
-//             double normalized_width = board.getBoundaries().xSpan() * (1.0 + space_ratio_x) - space_ratio_x;
-//             double normalized_height = board.getBoundaries().ySpan() * (1.0 + space_ratio_y) - space_ratio_y;
-//             
-//             double fit_to_width_ratio = box.width() / normalized_width;
-//             double fit_to_height_ratio = box.height() / normalized_height;
-//             double tile_size = Math.min(fit_to_width_ratio, fit_to_height_ratio);
-//             // Here's where tricky coordinate stuff happens.
-//             // Leftmost tile gets coordinates of tile_size / 2
-//             double x_pos = (tile_size / 2) + (coords.getX() - board.getBoundaries().x_min) * (tile_size * (1.0 + space_ratio_x));
-//             double y_pos = (tile_size / 2) + (coords.getY() - board.getBoundaries().y_min) * (tile_size * (1.0 + space_ratio_y));
-//             tile.draw(g, x_pos, y_pos, tile_size / 2, tile_size / 2);
-//             tile.draw(g, box.width() / 2 + camera.getTransformedXPosition(coords.getX()),
-//                          box.height() / 2 + camera.getTransformedYPosition(coords.getY()),
-//                          camera.getTransformedXScale(0.5),
-//                          camera.getTransformedYScale(0.5));
 
             // TODO: Handle the width term more elegantly          
             tile.draw(g, box.width() / 2.0 + camera.getTransformedXPosition(getNormalTileCenterX(coords.getX())),
