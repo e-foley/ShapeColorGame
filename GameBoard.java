@@ -54,8 +54,8 @@ public class GameBoard implements Cloneable
         board.put(new Coords(x, y), piece);
     }
 
-    public void removePiece(int x, int y) {
-        board.remove(new Coords(x, y));
+    public GamePiece removePiece(int x, int y) {
+        return board.remove(new Coords(x, y));
     }
     
     public GamePiece getPiece(int x, int y) {
