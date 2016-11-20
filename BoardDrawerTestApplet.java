@@ -28,6 +28,15 @@ public class BoardDrawerTestApplet extends Applet
         cursor_normal_y = 0.0;
         cursor_board_coords_x = 0;
         cursor_board_coords_y = 0;
+        board_box = new BoundingBox();  // Make 
+        viewport = new Viewport(board_box, camera);
+        palette = new StandardPalette();
+        
+        rack_one = new Rack();
+        
+        for (int i = 0; i < 6; ++i) {
+            rack_one.addPiece(bank.drawRandom(randomizer));
+        }
         
         // Just so we don't start at weird zoom!
         board.addPiece(cursor_board_coords_x, cursor_board_coords_y, bank.drawRandom(randomizer));
@@ -82,18 +91,11 @@ public class BoardDrawerTestApplet extends Applet
                 if(recalculateNormalCoordinates(x, y)) {
                     repaint();
                 }
+                
+                
             }
 
             public void mouseDragged(MouseEvent event) {}
-            //          public void mouseDragged(MouseEvent event)
-            //          {
-            //              event = snapToGrid(event);
-            //              if (firstButtonHeld)
-            //              {     
-            //                 makeSpecialLines(event.getX(), event.getY());
-            //                 repaint();
-            //              }
-            //          }
         }
 
         MouseListener listener = new MousePressListener();
@@ -109,10 +111,8 @@ public class BoardDrawerTestApplet extends Applet
         Dimension applet_size = this.getSize();
         int applet_height = applet_size.height;
         int applet_width = applet_size.width;
-        
-        // Yeah, it really seems like the camera should be able to handle the width/height calculations.
-        cursor_normal_x = camera.inverseXPosition(x - applet_width / 2.0);
-        cursor_normal_y = camera.inverseYPosition(y - applet_height / 2.0);
+        cursor_normal_x = camera.inverseXPosition(viewport.toCameraX(x));
+        cursor_normal_y = camera.inverseYPosition(viewport.toCameraY(y));
         DenormalizationResult result = BoardDrawer.denormalize(cursor_normal_x, cursor_normal_y, true);
         boolean new_value = false;
         // TODO: Consider whether we actually want to mirror these fields in the applet class or whether we should just store the denormalization result
@@ -141,8 +141,13 @@ public class BoardDrawerTestApplet extends Applet
         Dimension applet_size = this.getSize();
         int applet_height = applet_size.height;
         int applet_width = applet_size.width;
-        double estimated_zoom_x = (double)(applet_width) / BoardDrawer.getNormalBoardWidth(board);
-        double estimated_zoom_y = (double)(applet_height) / BoardDrawer.getNormalBoardHeight(board);
+        // Populate BoundingBox fields individually because "new" BoundingBox wouldn't be recognized properly.
+        board_box.x_min = 0.0;
+        board_box.x_max = applet_width - 1.0;
+        board_box.y_min = 0.0;
+        board_box.y_max = applet_height - RACK_ALLOWANCE - 1.0;
+        double estimated_zoom_x = (double)(board_box.width()) / BoardDrawer.getNormalBoardWidth(board);
+        double estimated_zoom_y = (double)(board_box.height()) / BoardDrawer.getNormalBoardHeight(board);
         double min_zoom = Math.min(estimated_zoom_x, estimated_zoom_y);
         camera.setXZoom(min_zoom);
         camera.setYZoom(min_zoom);
@@ -158,7 +163,8 @@ public class BoardDrawerTestApplet extends Applet
         g2.draw(outer_border); 
         g2.drawString("(" + String.valueOf(cursor_board_coords_x) + ", " + String.valueOf(cursor_board_coords_y) + ")", 50, 50);
         // g2.drawString("(" + String.valueOf(cursor_normal_x) + ", " + String.valueOf(cursor_normal_y) + ")", 50, 80);
-        BoardDrawer.drawBoard(g2, new BoundingBox(0.0, applet_width - 1.0, 0.0, applet_height - 1.0), camera, board);
+        BoardDrawer.drawBoard(g2, board_box, camera, board, palette);
+        RackDrawer.drawRack(g2, rack_one, 0.0, applet_height - RACK_ALLOWANCE, RACK_ALLOWANCE);
     }
 
     //    public void update(Graphics g)
@@ -178,4 +184,9 @@ public class BoardDrawerTestApplet extends Applet
     private int cursor_board_coords_x;
     private int cursor_board_coords_y;
     private boolean valid_board_coords;
+    private BoundingBox board_box;
+    private Rack rack_one;
+    private Viewport viewport;
+    private Palette palette;
+    private static final double RACK_ALLOWANCE = 100.0;
 } 
