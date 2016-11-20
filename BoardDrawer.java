@@ -91,7 +91,7 @@ public class BoardDrawer
      * @param  y   a sample parameter for a method
      * @return     the sum of x and y 
      */
-    static public void drawBoard(Graphics2D g, BoundingBox box, CameraPosition camera, GameBoard board)
+    public static void drawBoard(Graphics2D g, BoundingBox box, CameraPosition camera, GameBoard board, Palette palette)
     {
         // Draw each tile.  The tricky part is knowing how to scale things.
         
@@ -103,33 +103,8 @@ public class BoardDrawer
             final Coords coords = all_coords[i];
             final GamePiece piece = board.getPiece(coords.getX(), coords.getY());
             // Have to establish rules about how to draw the piece.
-            Color color;
-            switch (piece.getColor()) {
-                case 0:
-                    color = Color.RED;
-                    break;
-                case 1:
-                    color = new Color(0, 128, 255);
-                    break;
-                case 2:
-                    color = new Color(0, 196, 0);
-                    break;
-                case 3:
-                    color = Color.YELLOW;
-                    break;
-                case 4:
-                    color = new Color(128, 64, 255);
-                    break;
-                case 5:
-                    color = new Color(255, 128, 0);
-                    break;
-                default:
-                    color = Color.GRAY;
-                    break;
-            }
-            
-            // TODO: Actually separate the color from the shape...
-            
+            final Color color = palette.getColor(piece.getColor());
+
             TileIcon shape;
             switch (piece.getShape()) {
                 case 0:
@@ -164,7 +139,6 @@ public class BoardDrawer
                          box.height() / 2.0 + camera.getTransformedYPosition(getNormalTileCenterY(coords.getY())),
                          camera.getTransformedXScale(0.5),
                          camera.getTransformedYScale(0.5));
-            //System.out.println();
         }
     }
 }
