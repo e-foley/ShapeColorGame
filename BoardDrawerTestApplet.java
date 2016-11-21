@@ -31,6 +31,7 @@ public class BoardDrawerTestApplet extends Applet
         board_box = new BoundingBox();  // Make 
         viewport = new Viewport(board_box, camera);
         palette = new StandardPalette();
+        icon_set = new StandardIconSet();
         
         rack_one = new Rack();
         
@@ -163,7 +164,7 @@ public class BoardDrawerTestApplet extends Applet
         g2.draw(outer_border); 
         g2.drawString("(" + String.valueOf(cursor_board_coords_x) + ", " + String.valueOf(cursor_board_coords_y) + ")", 50, 50);
         // g2.drawString("(" + String.valueOf(cursor_normal_x) + ", " + String.valueOf(cursor_normal_y) + ")", 50, 80);
-        BoardDrawer.drawBoard(g2, board_box, camera, board, palette);
+        BoardDrawer.drawBoard(g2, board_box, camera, board, palette, icon_set);
         RackDrawer.drawRack(g2, rack_one, 0.0, applet_height - RACK_ALLOWANCE, RACK_ALLOWANCE);
     }
 
@@ -188,5 +189,6 @@ public class BoardDrawerTestApplet extends Applet
     private Rack rack_one;
     private Viewport viewport;
     private Palette palette;
+    private IconSet icon_set;
     private static final double RACK_ALLOWANCE = 100.0;
 } 

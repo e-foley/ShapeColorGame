@@ -91,7 +91,7 @@ public class BoardDrawer
      * @param  y   a sample parameter for a method
      * @return     the sum of x and y 
      */
-    public static void drawBoard(Graphics2D g, BoundingBox box, CameraPosition camera, GameBoard board, Palette palette)
+    public static void drawBoard(Graphics2D g, BoundingBox box, CameraPosition camera, GameBoard board, Palette palette, IconSet icon_set)
     {
         // Draw each tile.  The tricky part is knowing how to scale things.
         
@@ -102,39 +102,11 @@ public class BoardDrawer
         for (int i = 0; i < all_coords.length; i++) {
             final Coords coords = all_coords[i];
             final GamePiece piece = board.getPiece(coords.getX(), coords.getY());
-            // Have to establish rules about how to draw the piece.
             final Color color = palette.getColor(piece.getColor());
+            final TileIcon shape = icon_set.getIcon(piece.getShape(), color);
+            final TileGraphic tile = new TileGraphic(shape, 0.6);  // TODO: remove magic number
 
-            TileIcon shape;
-            switch (piece.getShape()) {
-                case 0:
-                    shape = new CircleIcon(color);
-                    break;
-                case 1:
-                    // shape = new SquareIcon(color);
-                    shape = new RegularPolygonIcon(color, 4, 0);
-                    break;
-                case 2:
-                    // shape = new DiamondIcon(color);
-                    shape = new RegularPolygonIcon(color, 4, Math.PI/4.0);
-                    break;
-                case 3:
-                    shape = new StarIcon(color, 4, 0.33, Math.PI/4.0);
-                    break;
-                case 4:
-                    shape = new StarIcon(color, 8, 0.425, 0.0);
-                    break;
-                case 5:
-                    shape = new FlowerIcon(color, 4, 0.35, 0.65);
-                    break;
-                default:
-                    shape = new CircleIcon(color);  // Make dummy icon
-                    break;
-            }
-            
-            TileGraphic tile = new TileGraphic(shape, 0.6);  // TODO: remove magic number
-
-            // TODO: Handle the width term more elegantly          
+            // TODO: Have this calculation make more intuitive sense
             tile.draw(g, box.width() / 2.0 + camera.getTransformedXPosition(getNormalTileCenterX(coords.getX())),
                          box.height() / 2.0 + camera.getTransformedYPosition(getNormalTileCenterY(coords.getY())),
                          camera.getTransformedXScale(0.5),
