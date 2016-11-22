@@ -126,6 +126,8 @@ public class StandardPlacementRules implements PlacementRules
                     continue;
                 } else if (contains(additions, x, y)) {  // TODO: perform this search only once rather than twice
                     access_table[find(additions, x, y)] = true;
+                } else {
+                    left_end_reached = true;
                 }
             }
             
@@ -137,6 +139,8 @@ public class StandardPlacementRules implements PlacementRules
                     continue;
                 } else if (contains(additions, x, y)) {  // TODO: perform this search only once rather than twice
                     access_table[find(additions, x, y)] = true;
+                } else {
+                    right_end_reached = true;
                 }
             }
         } else if (direction == VERTICAL) {
@@ -151,6 +155,8 @@ public class StandardPlacementRules implements PlacementRules
                     continue;
                 } else if (contains(additions, x, y)) {  // TODO: perform this search only once rather than twice
                     access_table[find(additions, x, y)] = true;
+                } else {
+                    top_end_reached = true;
                 }
             }
             
@@ -162,6 +168,8 @@ public class StandardPlacementRules implements PlacementRules
                     continue;
                 } else if (contains(additions, x, y)) {  // TODO: perform this search only once rather than twice
                     access_table[find(additions, x, y)] = true;
+                } else {
+                    bottom_end_reached = true;
                 }
             }
         }
