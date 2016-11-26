@@ -177,7 +177,7 @@ public class BoardDrawerTestApplet extends Applet
         g2.setColor(text_color);
         g2.drawString("(" + String.valueOf(cursor_board_coords_x) + ", " + String.valueOf(cursor_board_coords_y) + ")", 50, 50);
         BoardDrawer.drawBoard(g2, board_box, camera, board, palette, icon_set);
-        RackDrawer.drawRack(g2, rack_one, 0.0, applet_height - RACK_ALLOWANCE, RACK_ALLOWANCE);
+        RackDrawer.drawRack(g2, rack_one, 0.0, applet_height - RACK_ALLOWANCE, RACK_ALLOWANCE, palette, icon_set);
         
         // TODO: OFFLOAD LATER
         if (piece_selected != null) {
@@ -228,7 +228,7 @@ public class BoardDrawerTestApplet extends Applet
     private Viewport viewport;
     private Palette palette;
     private IconSet icon_set;
-    private static final double RACK_ALLOWANCE = 100.0;
+    private static final double RACK_ALLOWANCE = 500.0/6.0;  // Consider setting this dynamically based on num tiles in rack
     private static final double TILE_MARGIN = 1.0;  // Minimum margin (in tile widths) to surround play area with
     private PlacementRules placement_rules;
     private GamePiece piece_selected;
