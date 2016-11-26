@@ -14,6 +14,7 @@ public class StandardPlacementRules implements PlacementRules {
     // 2. Can't overlap existing tile
     // 3. Forms contiguous line
     // 4. Every tile meets requirements of valid groupings in both vertical and horizontal directions
+    // 5. Tiles are contiguous with at least one tile existing on the board
     public boolean isValidMove(GameBoard board, ArrayList<ProposedMove> additions) {
         assert (additions.size() >= 0);
         
@@ -149,6 +150,25 @@ public class StandardPlacementRules implements PlacementRules {
             if (!access_table[i]) {
                 return false;
             }
+        }
+        
+        // Condition 5: this flag must be set true--either now or later--in order for move to be valid
+        boolean meets_continuity = board.isEmpty();  // Get free pass when no tiles have yet been played
+        if (!meets_continuity) {
+            for (int i = 0; i < additions.size(); ++i) {
+                final ProposedMove move = additions.get(i);
+                final int x = move.getX();
+                final int y = move.getY();
+                // If a piece exists at a neighboring coordinate, we pass the continuity check
+                if (board.isPieceAt(x - 1, y) || board.isPieceAt(x + 1, y) || board.isPieceAt(x, y - 1) || board.isPieceAt(x, y + 1)) {
+                    meets_continuity = true;
+                    break;
+                }
+            }
+        }
+        
+        if (!meets_continuity) {
+            return false;
         }
         
         // Next, ensure all lines formed are valid
