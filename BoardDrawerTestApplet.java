@@ -178,6 +178,20 @@ public class BoardDrawerTestApplet extends Applet
         g2.drawString("(" + String.valueOf(cursor_board_coords_x) + ", " + String.valueOf(cursor_board_coords_y) + ")", 50, 50);
         BoardDrawer.drawBoard(g2, board_box, camera, board, palette, icon_set);
         RackDrawer.drawRack(g2, rack_one, 0.0, applet_height - RACK_ALLOWANCE, RACK_ALLOWANCE);
+        
+        // TODO: OFFLOAD LATER
+        if (piece_selected != null) {
+            final GamePiece piece = piece_selected;
+            final Color color = palette.getColor(piece.getColor());
+            final TileIcon shape = icon_set.getIcon(piece.getShape(), color);
+            final TileGraphic tile = new TileGraphic(shape, 0.6);  // TODO: remove magic number
+            // GameBoard temp_board = new GameBoard();
+            // temp_board.addPiece(cursor_board_coords_x, cursor_board_coords_y, new GamePiece(piece_selected));
+            // BoardDrawer.drawBoard(g2, board_box, camera, temp_board, palette, icon_set);
+            
+            // Draw the selected tile as a preview at top left
+            tile.draw((Graphics2D)g, camera.getTransformedXScale(0.15), camera.getTransformedYScale(0.15), camera.getTransformedXScale(0.15), camera.getTransformedYScale(0.15));
+        }
     }
     
     public void onNormalizedCoordinateChange() {
