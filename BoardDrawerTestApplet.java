@@ -32,6 +32,7 @@ public class BoardDrawerTestApplet extends Applet
         viewport = new Viewport(board_box, camera);
         palette = new StandardPalette();
         icon_set = new StandardIconSet();
+        placement_rules = new StandardPlacementRules();
         
         rack_one = new Rack();
         
@@ -192,4 +193,5 @@ public class BoardDrawerTestApplet extends Applet
     private IconSet icon_set;
     private static final double RACK_ALLOWANCE = 100.0;
     private static final double TILE_MARGIN = 1.0;  // Minimum margin (in tile widths) to surround play area with
+    private PlacementRules placement_rules;
 } 
