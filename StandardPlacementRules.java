@@ -262,18 +262,22 @@ public class StandardPlacementRules implements PlacementRules
             pieces_in_line.add(board.getPiece(x, y));
         }
         
-        int x_check = x;
+        // Because we've already added piece at x
+        int x_check = x - 1;
         
         // Add all pieces to the left
-        while (board.isPieceAt(x_check--, y)) {
+        while (board.isPieceAt(x_check, y)) {
             pieces_in_line.add(board.getPiece(x_check, y));
+            x_check--;
         }
         
-        x_check = x;
+        // Again, have already added piece at x
+        x_check = x + 1;
         
         // Add all pieces to the right
-        while (board.isPieceAt(x_check++, y)) {
+        while (board.isPieceAt(x_check, y)) {
             pieces_in_line.add(board.getPiece(x_check, y));
+            x_check++;
         }
         
         // Evaluate the pieces in this set
@@ -290,18 +294,22 @@ public class StandardPlacementRules implements PlacementRules
             pieces_in_line.add(board.getPiece(x, y));
         }
         
-        int y_check = y;
+        // Because we've already added piece at y
+        int y_check = y - 1;
         
         // Add all pieces above
-        while (board.isPieceAt(x, y_check--)) {
+        while (board.isPieceAt(x, y_check)) {
             pieces_in_line.add(board.getPiece(x, y_check));
+            y_check--;
         }
         
-        y_check = y;
+        // Again, have already added piece at y
+        y_check = y + 1;
         
-        // Add all pieces to the right
-        while (board.isPieceAt(x, y_check++)) {
+        // Add all pieces below
+        while (board.isPieceAt(x, y_check)) {
             pieces_in_line.add(board.getPiece(x, y_check));
+            y_check++;
         }
         
         // Evaluate the pieces in this set
