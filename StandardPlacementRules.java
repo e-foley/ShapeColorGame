@@ -1,43 +1,13 @@
 import java.util.ArrayList;
 import java.lang.Math;
 
-/**
- * Write a description of class StandardRules here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class StandardPlacementRules implements PlacementRules
-{
-    // instance variables - replace the example below with your own
-    private int x;
-
+public class StandardPlacementRules implements PlacementRules {
     private static final int NO_DIRECTION = 0;
     private static final int HORIZONTAL = 1;
     private static final int VERTICAL = 2;
     private static final int NO_MATCH = -1;
-    
-    /**
-     * Constructor for objects of class StandardRules
-     */
-    public StandardPlacementRules()
-    {
-        // initialise instance variables
-        x = 0;
-    }
 
-    /**
-     * An example of a method - replace this comment with your own
-     * 
-     * @param  y   a sample parameter for a method
-     * @return     the sum of x and y 
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
-    }
-    
+    public StandardPlacementRules() {}
     
     // In order to be valid...
     // 1. All along one direction
