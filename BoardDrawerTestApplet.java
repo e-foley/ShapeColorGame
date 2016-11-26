@@ -147,8 +147,8 @@ public class BoardDrawerTestApplet extends Applet
         board_box.x_max = applet_width - 1.0;
         board_box.y_min = 0.0;
         board_box.y_max = applet_height - RACK_ALLOWANCE - 1.0;
-        double estimated_zoom_x = (double)(board_box.width()) / BoardDrawer.getNormalBoardWidth(board);
-        double estimated_zoom_y = (double)(board_box.height()) / BoardDrawer.getNormalBoardHeight(board);
+        double estimated_zoom_x = (double)(board_box.width()) / (BoardDrawer.getNormalBoardWidth(board) + 2.0 * TILE_MARGIN);
+        double estimated_zoom_y = (double)(board_box.height()) / (BoardDrawer.getNormalBoardHeight(board) + 2.0 * TILE_MARGIN);
         double min_zoom = Math.min(estimated_zoom_x, estimated_zoom_y);
         camera.setXZoom(min_zoom);
         camera.setYZoom(min_zoom);
@@ -191,4 +191,5 @@ public class BoardDrawerTestApplet extends Applet
     private Palette palette;
     private IconSet icon_set;
     private static final double RACK_ALLOWANCE = 100.0;
+    private static final double TILE_MARGIN = 1.0;  // Minimum margin (in tile widths) to surround play area with
 } 
