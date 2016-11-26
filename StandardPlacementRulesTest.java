@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.ArrayList;
 
 /**
@@ -35,7 +36,7 @@ public class StandardPlacementRulesTest
     public void testGroupingNone()
     {
         StandardPlacementRules rules = new StandardPlacementRules();
-        ArrayList<GamePiece> pieces = new ArrayList<GamePiece>();
+        CopyOnWriteArrayList<GamePiece> pieces = new CopyOnWriteArrayList<GamePiece>();
         assertTrue(rules.isValidGrouping(pieces));
     }
     
@@ -43,7 +44,7 @@ public class StandardPlacementRulesTest
     public void testGroupingSolo()
     {
         StandardPlacementRules rules = new StandardPlacementRules();
-        ArrayList<GamePiece> pieces = new ArrayList<GamePiece>();
+        CopyOnWriteArrayList<GamePiece> pieces = new CopyOnWriteArrayList<GamePiece>();
         pieces.add(new GamePiece(0, 0));
         assertTrue(rules.isValidGrouping(pieces));
     }
@@ -52,7 +53,7 @@ public class StandardPlacementRulesTest
     public void testGroupingTwoTotallyDifferent()
     {
         StandardPlacementRules rules = new StandardPlacementRules();
-        ArrayList<GamePiece> pieces = new ArrayList<GamePiece>();
+        CopyOnWriteArrayList<GamePiece> pieces = new CopyOnWriteArrayList<GamePiece>();
         pieces.add(new GamePiece(0, 0));
         pieces.add(new GamePiece(1, 1));
         assertFalse(rules.isValidGrouping(pieces));
@@ -62,7 +63,7 @@ public class StandardPlacementRulesTest
     public void testGroupingTwoShareShape()
     {
         StandardPlacementRules rules = new StandardPlacementRules();
-        ArrayList<GamePiece> pieces = new ArrayList<GamePiece>();
+        CopyOnWriteArrayList<GamePiece> pieces = new CopyOnWriteArrayList<GamePiece>();
         pieces.add(new GamePiece(0, 0));
         pieces.add(new GamePiece(0, 1));
         assertTrue(rules.isValidGrouping(pieces));
@@ -72,7 +73,7 @@ public class StandardPlacementRulesTest
     public void testGroupingTwoShareSameColor()
     {
         StandardPlacementRules rules = new StandardPlacementRules();
-        ArrayList<GamePiece> pieces = new ArrayList<GamePiece>();
+        CopyOnWriteArrayList<GamePiece> pieces = new CopyOnWriteArrayList<GamePiece>();
         pieces.add(new GamePiece(0, 0));
         pieces.add(new GamePiece(1, 0));
         assertTrue(rules.isValidGrouping(pieces));
@@ -82,7 +83,7 @@ public class StandardPlacementRulesTest
     public void testGroupingTwoIdentical()
     {
         StandardPlacementRules rules = new StandardPlacementRules();
-        ArrayList<GamePiece> pieces = new ArrayList<GamePiece>();
+        CopyOnWriteArrayList<GamePiece> pieces = new CopyOnWriteArrayList<GamePiece>();
         pieces.add(new GamePiece(0, 0));
         pieces.add(new GamePiece(0, 0));
         assertFalse(rules.isValidGrouping(pieces));
@@ -92,7 +93,7 @@ public class StandardPlacementRulesTest
     public void testQuirkleBuildingSameColor()
     {
         StandardPlacementRules rules = new StandardPlacementRules();
-        ArrayList<GamePiece> pieces = new ArrayList<GamePiece>();
+        CopyOnWriteArrayList<GamePiece> pieces = new CopyOnWriteArrayList<GamePiece>();
         assertEquals(0, rules.scoreGrouping(pieces));
         pieces.add(new GamePiece(0, 0));
         assertEquals(1, rules.scoreGrouping(pieces));

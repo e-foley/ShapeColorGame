@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Write a description of class PlacementRules here.
@@ -8,6 +9,6 @@ import java.util.ArrayList;
  */
 public interface PlacementRules
 {
-    public abstract boolean isValidMove(GameBoard board, ArrayList<ProposedMove> play);
-    public abstract int scoreMove(GameBoard board, ArrayList<ProposedMove> play);
+    public abstract boolean isValidMove(GameBoard board, CopyOnWriteArrayList<ProposedMove> play);
+    public abstract int scoreMove(GameBoard board, CopyOnWriteArrayList<ProposedMove> play);
 }

@@ -18,7 +18,7 @@ public class IconApplet extends Applet
       // the rectangle that the paint method draws
       // icon = new SquareIcon(Color.RED);
       icon = new DiamondIcon(Color.RED);
-      
+      icon = new TextIcon(Color.WHITE, "H");
       // add mouse press listener         
 
       class MousePressListener implements MouseListener

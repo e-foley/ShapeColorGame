@@ -19,6 +19,11 @@ public class GamePiece
         // initialise instance variables
     }
     
+    public GamePiece(GamePiece piece) {
+        this.shape_id = piece.shape_id;
+        this.color_id = piece.color_id;
+    }
+    
     public GamePiece(int shape_id, int color_id) {
         this.shape_id = shape_id;
         this.color_id = color_id;
@@ -32,7 +37,18 @@ public class GamePiece
         return color_id;
     }
     
-    public boolean equals(final GamePiece other) {
-        return this.getShape() == other.getShape() && this.getColor() == other.getColor();
+    public boolean equals(GamePiece obj) {
+        if (obj instanceof GamePiece) {
+            return shape_id == ((GamePiece)obj).shape_id && color_id == ((GamePiece)obj).color_id; 
+        } else {
+            return false;
+        }
     }
+    
+    public boolean altEquals(/*final*/ GamePiece other) {
+        //return this.getShape() == other.getShape() && this.getColor() == other.getColor();
+        return this.shape_id == other.shape_id && this.color_id == other.color_id;
+    }
+    
+    //public 
 }
