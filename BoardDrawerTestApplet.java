@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.Random;
+import java.util.ArrayList;
 
 /**
 This applet lets the user move a rectangle by clicking
@@ -34,6 +35,7 @@ public class BoardDrawerTestApplet extends Applet
         icon_set = new StandardIconSet();
         placement_rules = new StandardPlacementRules();
         piece_selected = bank.drawRandom(randomizer);
+        text_color = Color.BLACK;
         
         rack_one = new Rack();
         
@@ -102,10 +104,8 @@ public class BoardDrawerTestApplet extends Applet
                 int x = event.getX();
                 int y = event.getY();
                 if(recalculateNormalCoordinates(x, y)) {
-                    repaint();
+                    onNormalizedCoordinateChange();
                 }
-                
-                
             }
 
             public void mouseDragged(MouseEvent event) {}
@@ -174,10 +174,22 @@ public class BoardDrawerTestApplet extends Applet
         Graphics2D g2 = (Graphics2D)g;
         Rectangle2D.Double outer_border = new Rectangle2D.Double(0, 0, applet_width - 1, applet_height - 1);
         g2.draw(outer_border); 
+        g2.setColor(text_color);
         g2.drawString("(" + String.valueOf(cursor_board_coords_x) + ", " + String.valueOf(cursor_board_coords_y) + ")", 50, 50);
-        // g2.drawString("(" + String.valueOf(cursor_normal_x) + ", " + String.valueOf(cursor_normal_y) + ")", 50, 80);
         BoardDrawer.drawBoard(g2, board_box, camera, board, palette, icon_set);
         RackDrawer.drawRack(g2, rack_one, 0.0, applet_height - RACK_ALLOWANCE, RACK_ALLOWANCE);
+    }
+    
+    public void onNormalizedCoordinateChange() {
+        // Draw "next" tile at location
+        ArrayList<ProposedMove> additions = new ArrayList<ProposedMove>();
+        additions.add(new ProposedMove(piece_selected, cursor_board_coords_x, cursor_board_coords_y));
+        if (placement_rules.isValidMove(board, additions)) {
+            text_color = Color.GREEN;
+        } else {
+            text_color = Color.RED;
+        }
+        repaint();
     }
 
     //    public void update(Graphics g)
@@ -206,4 +218,5 @@ public class BoardDrawerTestApplet extends Applet
     private static final double TILE_MARGIN = 1.0;  // Minimum margin (in tile widths) to surround play area with
     private PlacementRules placement_rules;
     private GamePiece piece_selected;
+    private Color text_color;
 } 
