@@ -33,6 +33,7 @@ public class BoardDrawerTestApplet extends Applet
         palette = new StandardPalette();
         icon_set = new StandardIconSet();
         placement_rules = new StandardPlacementRules();
+        piece_selected = bank.drawRandom(randomizer);
         
         rack_one = new Rack();
         
@@ -55,11 +56,21 @@ public class BoardDrawerTestApplet extends Applet
                 recalculateNormalCoordinates(x, y);
                 
                 if (event.getButton() == MouseEvent.BUTTON1 && !bank.isEmpty() && !board.isPieceAt(cursor_board_coords_x, cursor_board_coords_y)) {
-                    board.addPiece(cursor_board_coords_x, cursor_board_coords_y, bank.drawRandom(randomizer));
-                    repaint();
+                    if (piece_selected != null) {
+                        board.addPiece(cursor_board_coords_x, cursor_board_coords_y, piece_selected);
+                        repaint();
+                    }
+                        
+                    if (!bank.isEmpty()) {
+                        piece_selected = bank.drawRandom(randomizer);
+                    } else {
+                        piece_selected = null;
+                    }
                 } else if (event.getButton() == MouseEvent.BUTTON3 && board.isPieceAt(cursor_board_coords_x, cursor_board_coords_y)) {
-                    // GamePiece piece_removing = board.getPiece(cursor_board_coords_x, cursor_board_coords_y);
                     GamePiece piece_removing = board.removePiece(cursor_board_coords_x, cursor_board_coords_y);
+                    if (bank.isEmpty()) {
+                        piece_selected = piece_removing;
+                    }
                     bank.addPiece(piece_removing);
                     repaint();
                 }
@@ -194,4 +205,5 @@ public class BoardDrawerTestApplet extends Applet
     private static final double RACK_ALLOWANCE = 100.0;
     private static final double TILE_MARGIN = 1.0;  // Minimum margin (in tile widths) to surround play area with
     private PlacementRules placement_rules;
+    private GamePiece piece_selected;
 } 
