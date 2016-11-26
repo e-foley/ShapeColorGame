@@ -112,4 +112,8 @@ public class GameBoard implements Cloneable
     public Coords[] getAllCoords() {
         return board.keySet().toArray(new Coords[0]);
     }
+    
+    public boolean isEmpty() {
+        return board.isEmpty();
+    }
 }
